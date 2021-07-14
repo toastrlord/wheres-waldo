@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+#circle {
+  border: solid 2px black;
+  border-radius: 50%;
+  position: absolute;
+  height: 32px;
+  width: 32px;
+}
+
+#image {
+  height: 400px;
+  width: 400px;
+  background-color: grey;
+}
