@@ -1,8 +1,7 @@
 extends layout
-
 block content
   h1= title
   div(id='circle')
-  div(id='image')
+  img(id='image' src='/images/' + imageSrc)
   p Welcome to #{title}
-  script(src='/javascripts/test.js') 
+  script(src='/javascripts/test.js')

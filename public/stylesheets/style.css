@@ -10,13 +10,27 @@ a {
 #circle {
   border: solid 2px black;
   border-radius: 50%;
-  position: absolute;
-  height: 32px;
-  width: 32px;
+  position: fixed;
+  pointer-events: none;
 }
 
-#image {
-  height: 400px;
-  width: 400px;
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+}
+
+.pickCharacter {
+  transition: all 250ms;
+  border: solid black 1px;
+  padding-left: 8px;
+  padding-right: 8px;
+  cursor: pointer;
+  user-select: none;
   background-color: grey;
+}
+
+.pickCharacter:hover {
+  background-color: white;
 }
