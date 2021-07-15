@@ -1,32 +1,90 @@
 let trackMouse = true;
 let characters = ['Waldo', 'Odlaw'];
+const start = Date.now();
 
+const timer = document.createElement('div');
+timer.id = 'timer';
+document.body.appendChild(timer);
+window.setInterval(() => {
+    let currentTime = (Date.now() - start) / 1000;
+    timer.textContent = currentTime.toFixed(2);
+}, 10);
 const circle = document.querySelector('#circle');
 const image = document.querySelector('#image');
-const buttonContainer = createButtonContainer();
+const buttonContainer = document.querySelector('#buttonContainer');
 const selectionSize = 40; // diameter of the selection area, in pixels
 circle.style.width = selectionSize + 'px';
 circle.style.height = selectionSize + 'px';
+let buttonContainerHeight = 0;
+let currentScore;
 
 // TODO: wait until ALL images are loaded to start timer
 // FIXME: going away from page for some time prevents thumbnails from being loaded
-(function preloadThumbnails() {
+(function loadThumbnails() {
+    const promises = [];
     characters.forEach(character => {
+        const loadedPromise = new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = '/images/thumbnails/' + character.toLowerCase() + '.png';
+            img.addEventListener('load', (e) => {
+                console.log(`${character} thumbnail successfully loaded!`);
+                resolve(img);
+            });
+        });
+        promises.push(loadedPromise);
+    });
+    const mainImagePromise = new Promise((resolve, reject) => {
         const img = new Image();
-        img.src = '/images/thumbnails/' + character.toLowerCase() + '.png';
+        img.src = image.src;
+        img.addEventListener('load', (e) => {
+            console.log('Loaded main image!');
+            resolve(img);
+        });
+    });
+    promises.push(mainImagePromise);
+    Promise.all(promises)
+    .then(() => {
+        console.log('all images loaded!');
     });
 })();
+
+function gameOver() {
+    // display score form
+
+}
+
+function removeCharacter(characterName) {
+    characters = caracters.splice(characters.indexOf(characterName), 1);
+    if (characters.length === 0) {
+        gameOver();
+    }
+}
+
+function validateSelection(x, y, radius, characterName) {
+    const request = new XMLHttpRequest();
+    request.open('GET', 'url');
+    request.setRequestHeader('Content-type', 'application/json');
+    request.send(JSON.stringify({
+        x, y, radius, characterName
+    }));
+
+    return new Promise((resolve, reject) => {
+        request.onreadystatechange = () => {
+            if (request.readyState === XMLHttpRequest.DONE) {
+                if (request.status === 0) {
+                    resolve(characterName);
+                }
+                else {
+                    reject(false);
+                }
+            }
+        };
+    });
+}
 
 function moveCircle(x, y) {
     circle.style.left = x - circle.clientWidth / 2 + 'px';
     circle.style.top = y - circle.clientHeight / 2 + 'px';
-}
-
-function createButtonContainer() {
-    const container = document.createElement('div');
-    container.classList.add('buttonContainer');
-
-    return container;
 }
 
 function resetButtonContainer() {
@@ -36,8 +94,6 @@ function resetButtonContainer() {
     }
 }
 
-// FIXME: doesn't display properly on first click, but is fixed on subsequent clicks.
-// seems to be related to image loading time- could be fixed by preloading thumbnails?
 function createCharacterBar(pageX, pageY, imgX, imgY) {
     buttonContainer.style.display = 'flex';
     buttonContainer.style.left = pageX - selectionSize + 'px';
@@ -50,11 +106,14 @@ function createCharacterBar(pageX, pageY, imgX, imgY) {
         characterButton.classList.add('pickCharacter');
         characterButton.textContent = character;
         characterButton.addEventListener('click', (e) => {
-            /*  TODO: send message to server, get response on if it was a good selection
-                if you guess correct, remove character from the array
-                sendToServer(imgX, imgY, selectionSize / 2, character);
-                characters = characters.filter(thisCharacter => thisCharacter != character);
-            */
+            currentScore = Date.now() - start;
+            const result = validateSelection(imgX, imgY, selectionSize / 2, character);
+            result.then((characterName, failure) => {
+                removeCharacter(characterName);
+            }, reason => {
+                console.log('validation failed');
+                removeCharacter(character);
+            });
             trackMouse = true;
             moveCircle(e.clientX, e.clientY);
             circle.style.position = 'fixed';
@@ -67,7 +126,10 @@ function createCharacterBar(pageX, pageY, imgX, imgY) {
         buttonContainer.appendChild(innerContainer);
     });
     document.body.appendChild(buttonContainer);
-    buttonContainer.style.top = pageY - selectionSize / 2 - buttonContainer.clientHeight + 'px';
+    if (!buttonContainerHeight) { // TODO: need to fix, doesn't work right if you click before the images are loaded
+        buttonContainerHeight = buttonContainer.clientHeight;
+    }
+    buttonContainer.style.top = pageY - selectionSize / 2 - buttonContainerHeight + 'px';
 }
 
 document.addEventListener('mousemove', (e) => {

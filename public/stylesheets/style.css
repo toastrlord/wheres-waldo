@@ -14,7 +14,14 @@ a {
   pointer-events: none;
 }
 
-.buttonContainer {
+#timer {
+  position: fixed;
+  top: 0;
+  font-weight: bold;
+  background-color: white;
+}
+
+#buttonContainer {
   display: flex;
   justify-content: center;
   position: absolute;
