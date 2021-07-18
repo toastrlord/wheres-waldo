@@ -1,5 +1,5 @@
 let trackMouse = true;
-let characters = ['Waldo', 'Odlaw'];
+let characters = [];
 const start = Date.now();
 
 const timer = document.createElement('div');
@@ -17,6 +17,13 @@ circle.style.width = selectionSize + 'px';
 circle.style.height = selectionSize + 'px';
 let buttonContainerHeight = 0;
 let currentScore;
+
+(function loadCharacters() {
+    let characterElements = document.querySelectorAll('.character');
+    characterElements.forEach(c => {
+        characters.push(c.textContent);
+    });
+})();
 
 // TODO: wait until ALL images are loaded to start timer
 // FIXME: going away from page for some time prevents thumbnails from being loaded
@@ -54,7 +61,7 @@ function gameOver() {
 }
 
 function removeCharacter(characterName) {
-    characters = caracters.splice(characters.indexOf(characterName), 1);
+    characters.splice(characters.indexOf(characterName), 1);
     if (characters.length === 0) {
         gameOver();
     }

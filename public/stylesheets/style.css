@@ -38,6 +38,10 @@ a {
   background-color: grey;
 }
 
+.character {
+  display: none;
+}
+
 .pickCharacter:hover {
   background-color: white;
 }
