@@ -36,17 +36,3 @@ function createCharacter(characterName, x1, y1, x2, y2) {
     return {characterName, x1, y1, x2, y2};
 }
 
-function createAllImages(cb) {
-    async.parallel([
-        imageCreate('beach', '')
-    ], function(err, results) {
-        if (err) {
-            console.log('FINAL ERR: ' + err);
-        }
-        else {
-            console.log('IMAGES: ' + images);
-        }
-        mongoose.connection.close();
-    });
-}
-

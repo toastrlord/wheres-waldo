@@ -5,7 +5,7 @@ const start = Date.now();
 const timer = document.createElement('div');
 timer.id = 'timer';
 document.body.appendChild(timer);
-window.setInterval(() => {
+const timerInterval = window.setInterval(() => {
     let currentTime = (Date.now() - start) / 1000;
     timer.textContent = currentTime.toFixed(2);
 }, 10);
@@ -32,7 +32,7 @@ let currentScore;
     characters.forEach(character => {
         const loadedPromise = new Promise((resolve, reject) => {
             const img = new Image();
-            img.src = '/images/thumbnails/' + character.toLowerCase() + '.png';
+            img.src = '/images/character_thumbnails/' + character.toLowerCase() + '.png';
             img.addEventListener('load', (e) => {
                 console.log(`${character} thumbnail successfully loaded!`);
                 resolve(img);
@@ -57,7 +57,7 @@ let currentScore;
 
 function gameOver() {
     // display score form
-
+    window.clearInterval(timerInterval);
 }
 
 function removeCharacter(characterName) {
@@ -124,7 +124,7 @@ function createCharacterBar(pageX, pageY, imgX, imgY) {
             resetButtonContainer();
         });
         const image = document.createElement('img');
-        image.src = '/images/thumbnails/' + character.toLowerCase() + '.png';
+        image.src = '/images/character_thumbnails/' + character.toLowerCase() + '.png';
         innerContainer.appendChild(image);
         innerContainer.appendChild(characterButton);
         buttonContainer.appendChild(innerContainer);

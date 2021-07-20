@@ -29,11 +29,11 @@ function validate(x, y, r, imageName, characterName) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.redirect('/beach');
+  res.render('main', { images: Object.keys(imageData) });
 });
 
-router.get('/beach', function(req, res, next) {
-  res.render('index', { imageSrc: 'wheres-waldo-beach.png', characters: ['Waldo', 'Odlaw'] });
+router.get('/:image', function(req, res, next) {
+  res.render('index', { image: req.params.image, characters: Object.keys(imageData[req.params.image]) });
 });
 
 router.get('/:image/validate', function(req, res, next) {

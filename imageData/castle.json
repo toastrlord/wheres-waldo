@@ -1,0 +1,12 @@
+{
+    "name": "castle",
+    "characters": [
+        {
+            "characterName": "Waldo",
+            "x1": 458,
+            "y1": 1589,
+            "x2": 484,
+            "y2": 1530
+        }
+    ]
+}
