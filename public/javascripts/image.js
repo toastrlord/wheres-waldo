@@ -69,16 +69,13 @@ function removeCharacter(characterName) {
 
 function validateSelection(x, y, radius, characterName) {
     const request = new XMLHttpRequest();
-    request.open('GET', 'url');
-    request.setRequestHeader('Content-type', 'application/json');
-    request.send(JSON.stringify({
-        x, y, radius, characterName
-    }));
+    request.open('GET', window.location.href + `/validate?x=${x}&y=${y}&r=${radius}&characterName=${characterName}`);
+    request.send();
 
     return new Promise((resolve, reject) => {
         request.onreadystatechange = () => {
             if (request.readyState === XMLHttpRequest.DONE) {
-                if (request.status === 0) {
+                if (request.status === 200 && request.responseText === 'true') {
                     resolve(characterName);
                 }
                 else {
@@ -119,7 +116,7 @@ function createCharacterBar(pageX, pageY, imgX, imgY) {
                 removeCharacter(characterName);
             }, reason => {
                 console.log('validation failed');
-                removeCharacter(character);
+                console.log(reason);
             });
             trackMouse = true;
             moveCircle(e.clientX, e.clientY);
