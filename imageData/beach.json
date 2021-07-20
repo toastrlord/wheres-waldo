@@ -1,0 +1,20 @@
+{
+    "name": "beach",
+    "characters": [
+        {
+            "characterName": "Waldo",
+            "x1": "510",
+            "y1": "400",
+            "x2": "542",
+            "y2": "343"
+        },
+        {
+            "characterName": "Odlaw",
+            "x1": "233",
+            "y1": "413",
+            "x2": "253",
+            "y2": "349"
+        }
+    ]
+
+}

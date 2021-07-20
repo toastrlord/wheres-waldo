@@ -24,13 +24,9 @@ app.use('/users', usersRouter);
 
 const mongoose = require('mongoose');
 const dev_db = require('./mongodb_url');
-const mongoDB = process.env.MONGO_DB_URI || dev_db.url;
+const mongoDB = process.env.DEV_DB_URL || dev_db.url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-const db = mongoose.connection;
-
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // catch 404 and forward to error handler

@@ -1,0 +1,1 @@
+exports.url = 'mongodb://admin:admin1202@cluster0-shard-00-00.6h5mo.mongodb.net:27017,cluster0-shard-00-01.6h5mo.mongodb.net:27017,cluster0-shard-00-02.6h5mo.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-8e11o1-shard-0&authSource=admin&retryWrites=true&w=majority'
