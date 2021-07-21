@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const { Rectangle, Circle } = require('../intersect');
+const HighScore = require('../models/highScore');
 
 const imageData = {};
 fs.readdirSync('./imageData/').filter(file => file.endsWith('.json')).forEach(file => {
@@ -42,5 +43,28 @@ router.get('/:image/validate', function(req, res, next) {
 
   res.status(200).send(result);
 });
+
+router.post('/:image/score', [
+  body('name', 'Please enter your name').trim().isLength({min: 1}).escape(),
+  (req, res, next) => {
+    const highScoreEntry = new HighScore({
+      name: req.body.name,
+      score: req.body.score,
+      image: req.params.image
+    });
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render('/:image/score', { errors: errors.asArray() });
+    }
+    else {
+      HighScore.create(highScoreEntry, function(err, theEntry) {
+        if (err) { return next(err); }
+        res.redirect('/');
+      });
+    }
+  }
+]);
 
 module.exports = router;
