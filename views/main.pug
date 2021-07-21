@@ -2,10 +2,11 @@ extends layout
 block content
     each img in images 
         div(class='mainDisplay')
-            p=img
-            img(src='/images/' + img + '.png' class='thumbnail')
+            div(class='playHighScoreContainer')
+                p=imageData[img].displayName
+                img(src='/images/' + img + '.png' class='thumbnail')
             ul(class='charactersContainer')='Characters'
-                each character in Object.keys(imageData[img])
+                each character in Object.keys(imageData[img].characters)
                     li=character
             div(class='playHighScoreContainer')
                 a(href='/' + img)='Play'
