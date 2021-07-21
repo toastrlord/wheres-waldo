@@ -30,10 +30,11 @@ function validate(x, y, r, imageName, characterName) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('main', { images: Object.keys(imageData) });
+  res.render('main', { images: Object.keys(imageData), imageData });
 });
 
 router.get('/:image', function(req, res, next) {
+  console.log('rendering image');
   res.render('index', { image: req.params.image, characters: Object.keys(imageData[req.params.image]) });
 });
 
@@ -44,6 +45,7 @@ router.get('/:image/validate', function(req, res, next) {
   res.status(200).send(result);
 });
 
+/*
 router.post('/:image/score', [
   body('name', 'Please enter your name').trim().isLength({min: 1}).escape(),
   (req, res, next) => {
@@ -65,6 +67,6 @@ router.post('/:image/score', [
       });
     }
   }
-]);
+]);*/
 
 module.exports = router;
