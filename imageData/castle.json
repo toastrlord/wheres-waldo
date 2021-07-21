@@ -1,5 +1,6 @@
 {
     "name": "castle",
+    "displayName": "Castle Siege!",
     "characters": [
         {
             "characterName": "Waldo",

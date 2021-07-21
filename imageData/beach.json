@@ -1,5 +1,6 @@
 {
     "name": "beach",
+    "displayName": "A Day at the Beach",
     "characters": [
         {
             "characterName": "Waldo",

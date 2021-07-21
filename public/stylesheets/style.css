@@ -51,6 +51,16 @@ a {
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+  border-radius: 6px;
+  border: solid 2px grey;
+  background-color: gainsboro;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 4px;
+  width: 50%;
+  min-width: 350px;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 .playHighScoreContainer {
@@ -66,5 +76,5 @@ a {
 }
 
 .thumbnail {
-  width: 100px;
+  width: 150px;
 }

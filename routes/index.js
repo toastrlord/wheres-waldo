@@ -15,12 +15,15 @@ fs.readdirSync('./imageData/').filter(file => file.endsWith('.json')).forEach(fi
   const imageName = jsonData.name;
   imageData[imageName] = {};
   const currentImageData = imageData[imageName];
+  currentImageData.characters = {};
+  currentImageData.displayName = jsonData.displayName;
   jsonData.characters.forEach(characterData => {
     const {characterName, x1, y1, x2, y2} = characterData;
     const rect = new Rectangle(x1, y1, x2, y2);
-    currentImageData[characterName] = rect;
+    currentImageData.characters[characterName] = rect;
   });
 });
+console.log(imageData);
 
 function validate(x, y, r, imageName, characterName) {
   const boundingRect = imageData[imageName][characterName];
