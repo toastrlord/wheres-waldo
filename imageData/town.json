@@ -1,5 +1,6 @@
 {
     "name": "town",
+    "displayName": "Out on the Town",
     "characters": [
         {
             "characterName": "Waldo",
