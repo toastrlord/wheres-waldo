@@ -1,4 +1,12 @@
 extends layout 
 block content
     each img in images 
-        a(href=img) #{img}
+        div(class='mainDisplay')
+            p=img
+            img(src='/images/' + img + '.png' class='thumbnail')
+            ul(class='charactersContainer')='Characters'
+                each character in Object.keys(imageData[img])
+                    li=character
+            div(class='playHighScoreContainer')
+                a(href='/' + img)='Play'
+                a(href='/' + score)='High Scores'
