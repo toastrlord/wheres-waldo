@@ -26,7 +26,7 @@ fs.readdirSync('./imageData/').filter(file => file.endsWith('.json')).forEach(fi
 console.log(imageData);
 
 function validate(x, y, r, imageName, characterName) {
-  const boundingRect = imageData[imageName][characterName];
+  const boundingRect = imageData[imageName].characters[characterName];
   const selectionCircle = new Circle(x, y, r);
   return boundingRect.intersect(selectionCircle);
 }
@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/:image', function(req, res, next) {
   console.log('rendering image');
-  res.render('index', { image: req.params.image, characters: Object.keys(imageData[req.params.image]) });
+  res.render('index', { image: req.params.image, characters: Object.keys(imageData[req.params.image].characters) });
 });
 
 router.get('/:image/validate', function(req, res, next) {
