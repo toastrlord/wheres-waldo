@@ -1,5 +1,15 @@
+extends layout
 block content 
-    p #{image} High Score 
-    each entry in scores: 
-        p=entry.name 
-        p=entry.score
+    p #{imageName} High Score 
+    if scores.length == 0
+        div No high scores posted!
+    else
+        each score in scores
+            if newScoreID && score._id == newScoreID
+                div -make this one bold!
+                    p=entry.name 
+                    p=entry.score
+            else
+                div 
+                    p=entry.name 
+                    p=entry.score

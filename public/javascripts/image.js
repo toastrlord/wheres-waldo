@@ -69,7 +69,7 @@ function removeCharacter(characterName) {
 
 function validateSelection(x, y, radius, characterName) {
     const request = new XMLHttpRequest();
-    request.open('GET', window.location.href + `/validate?x=${x}&y=${y}&r=${radius}&characterName=${characterName}`);
+    request.open('GET', window.location.href + `/validate?x=${x}&y=${y}&r=${radius}&characterName=${characterName}&score=${currentScore}`);
     request.send();
 
     return new Promise((resolve, reject) => {

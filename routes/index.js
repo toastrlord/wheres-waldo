@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const imageController = require('../controllers/imageController');
 const async = require('async');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const { Rectangle, Circle } = require('../intersect');
 const HighScore = require('../models/highScore');
+let currentScore = 0;
 
 const imageData = {};
 fs.readdirSync('./imageData/').filter(file => file.endsWith('.json')).forEach(file => {
@@ -23,17 +23,20 @@ fs.readdirSync('./imageData/').filter(file => file.endsWith('.json')).forEach(fi
     currentImageData.characters[characterName] = rect;
   });
 });
-console.log(imageData);
 
-function validate(x, y, r, imageName, characterName) {
+function validate(x, y, r, imageName, characterName, score) {
   const boundingRect = imageData[imageName].characters[characterName];
   const selectionCircle = new Circle(x, y, r);
+  currentScore = score;
   return boundingRect.intersect(selectionCircle);
 }
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('main', { images: Object.keys(imageData), imageData });
+  HighScore.find({}).sort([['score', 'ascending']]).exec(function(err, scores) {
+    if (err) { return next(err); }
+    res.render('main', { images: Object.keys(imageData), imageData, scores });
+  });
 });
 
 router.get('/:image', function(req, res, next) {
@@ -42,19 +45,28 @@ router.get('/:image', function(req, res, next) {
 });
 
 router.get('/:image/validate', function(req, res, next) {
-  const {x, y, r, characterName} = req.query;
-  const result = validate(x, y, r, req.params.image, characterName);
+  const {x, y, r, characterName, score} = req.query;
+  const result = validate(x, y, r, req.params.image, characterName, score);
 
   res.status(200).send(result);
 });
 
-/*
+router.get('/:image/score', function(req, res, next) {
+  HighScore.find({image: req.params.image})
+  .sort([['score', 'ascending']])
+  .exec(function(err, scores) {
+    if (err) { next(err); }
+    res.render('scores', {scores, imageName: imageData[req.params.image]});
+  });
+});
+
+
 router.post('/:image/score', [
   body('name', 'Please enter your name').trim().isLength({min: 1}).escape(),
   (req, res, next) => {
     const highScoreEntry = new HighScore({
       name: req.body.name,
-      score: req.body.score,
+      score: currentScore,
       image: req.params.image
     });
 
@@ -70,6 +82,6 @@ router.post('/:image/score', [
       });
     }
   }
-]);*/
+]);
 
 module.exports = router;

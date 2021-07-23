@@ -5,4 +5,9 @@ block content
   img(id='image' src='/images/' + image + '.png')
   each c in characters
     div(class='character')= c
+  form(method='POST' action='')
+    label(for='name') Name: 
+    input(type='text' name='name' placeholder='Enter your name!')
+    label(for='score') Score: 
+    input(type='number' readonly='readonly')
   script(src='/javascripts/image.js')
