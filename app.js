@@ -20,8 +20,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
 const dev_db = require('./mongodb_url');
-const mongoDB = dev_db.url || process.env.DEV_DB_URL;
+const mongoDB = process.env.DEV_DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
