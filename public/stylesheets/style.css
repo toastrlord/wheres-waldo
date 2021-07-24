@@ -78,3 +78,7 @@ a {
 .thumbnail {
   width: 150px;
 }
+
+.bold {
+  font-weight: bold;
+}

@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const { Rectangle, Circle } = require('../intersect');
+const {body, validationResult} = require('express-validator');
 const HighScore = require('../models/highScore');
 let currentScore = 0;
 
@@ -56,12 +57,12 @@ router.get('/:image/score', function(req, res, next) {
   .sort([['score', 'ascending']])
   .exec(function(err, scores) {
     if (err) { next(err); }
-    res.render('scores', {scores, imageName: imageData[req.params.image]});
+    res.render('scores', {scores, imageName: imageData[req.params.image].displayName, newScoreID: req.query.newScoreID});
   });
 });
 
 
-router.post('/:image/score', [
+router.post('/:image', [
   body('name', 'Please enter your name').trim().isLength({min: 1}).escape(),
   (req, res, next) => {
     const highScoreEntry = new HighScore({
@@ -71,14 +72,14 @@ router.post('/:image/score', [
     });
 
     const errors = validationResult(req);
-
+    const newScoreID = highScoreEntry._id;
     if (!errors.isEmpty()) {
-      res.render('/:image/score', { errors: errors.asArray() });
+      res.render('/:image', { errors: errors.asArray() });
     }
     else {
       HighScore.create(highScoreEntry, function(err, theEntry) {
         if (err) { return next(err); }
-        res.redirect('/');
+        res.redirect('/:image/score/' + '?newScoreID=' + newScoreID);
       });
     }
   }

@@ -12,6 +12,7 @@ const timerInterval = window.setInterval(() => {
 const circle = document.querySelector('#circle');
 const image = document.querySelector('#image');
 const buttonContainer = document.querySelector('#buttonContainer');
+const scoreField = document.querySelector('#score');
 const selectionSize = 40; // diameter of the selection area, in pixels
 circle.style.width = selectionSize + 'px';
 circle.style.height = selectionSize + 'px';
@@ -34,7 +35,6 @@ let currentScore;
             const img = new Image();
             img.src = '/images/character_thumbnails/' + character.toLowerCase() + '.png';
             img.addEventListener('load', (e) => {
-                console.log(`${character} thumbnail successfully loaded!`);
                 resolve(img);
             });
         });
@@ -44,7 +44,6 @@ let currentScore;
         const img = new Image();
         img.src = image.src;
         img.addEventListener('load', (e) => {
-            console.log('Loaded main image!');
             resolve(img);
         });
     });
@@ -58,6 +57,8 @@ let currentScore;
 function gameOver() {
     // display score form
     window.clearInterval(timerInterval);
+    timer.textContent = currentScore;
+    score.value = currentScore;
 }
 
 function removeCharacter(characterName) {
@@ -98,6 +99,10 @@ function resetButtonContainer() {
     }
 }
 
+function getCurrentScore() {
+    return ((Date.now() - start) / 1000).toFixed(2);
+}
+
 function createCharacterBar(pageX, pageY, imgX, imgY) {
     buttonContainer.style.display = 'flex';
     buttonContainer.style.left = pageX - selectionSize + 'px';
@@ -110,13 +115,11 @@ function createCharacterBar(pageX, pageY, imgX, imgY) {
         characterButton.classList.add('pickCharacter');
         characterButton.textContent = character;
         characterButton.addEventListener('click', (e) => {
-            currentScore = Date.now() - start;
+            currentScore = getCurrentScore();
             const result = validateSelection(imgX, imgY, selectionSize / 2, character);
             result.then((characterName, failure) => {
                 removeCharacter(characterName);
             }, reason => {
-                console.log('validation failed');
-                console.log(reason);
             });
             trackMouse = true;
             moveCircle(e.clientX, e.clientY);
