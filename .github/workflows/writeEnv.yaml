@@ -14,7 +14,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "wheres-waldo-app"
           heroku_email: "robjmorandini@hotmail.com"
-          healthcheck: "https://wheres-waldo-app.herokuapp.com/health"
-          checkstring: "ok"
         env:
           HD_DEV_DB_URL: ${{secrets.DEV_DB_URL}}
