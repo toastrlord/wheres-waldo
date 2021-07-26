@@ -22,7 +22,6 @@ app.use('/', indexRouter);
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
-const dev_db = require('./mongodb_url');
 const mongoDB = process.env.DEV_DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;

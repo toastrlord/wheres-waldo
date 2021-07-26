@@ -72,14 +72,13 @@ router.post('/:image', [
     });
 
     const errors = validationResult(req);
-    const newScoreID = highScoreEntry._id;
     if (!errors.isEmpty()) {
       res.render('/:image', { errors: errors.asArray() });
     }
     else {
       HighScore.create(highScoreEntry, function(err, theEntry) {
         if (err) { return next(err); }
-        res.redirect('/:image/score/' + '?newScoreID=' + newScoreID);
+        res.redirect('/:image/score/' + '?newScoreID=' + theEntry._id);
       });
     }
   }
