@@ -1,15 +1,25 @@
 extends layout
 block content
-    p High Scores: #{imageName} 
+    title High Scores: #{imageName} 
+    h1(class='bold') High Scores: #{imageName} 
+    div(class='center')
+        button
+            a(href='/') Back
+        button
+            a(href='/' + image) Play
     if scores.length == 0
-        div No high scores posted!
+        div(class='center') No high scores posted!
     else
-        each entry in scores
-            if newScoreID && entry._id == newScoreID
-                div(class='bold')
-                    p=entry.name 
-                    p=entry.score
-            else
-                div 
-                    p=entry.name 
-                    p=entry.score
+        table
+            tr
+                th Name
+                th Score
+            each entry in scores
+                if newScoreID && entry._id == newScoreID
+                    tr(class='bold selectedScore')
+                        td=entry.name 
+                        td=entry.score
+                else
+                    tr
+                        td=entry.name 
+                        td=entry.score

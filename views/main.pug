@@ -1,13 +1,17 @@
 extends layout 
 block content
+    title Where's Waldo?
+    h1 Where's Waldo?
     each img in images 
         div(class='mainDisplay')
             div(class='playHighScoreContainer')
-                p=imageData[img].displayName
+                p(class='bold')=imageData[img].displayName
                 img(src='/images/' + img + '.png' class='thumbnail')
-            ul(class='charactersContainer')='Characters'
+            ul(class='charactersContainer')='Characters:'
                 each character in Object.keys(imageData[img].characters)
                     li=character
             div(class='playHighScoreContainer')
-                a(href='/' + img)='Play'
-                a(href='/' + score)='High Scores'
+                button
+                    a(href='/' + img)='Play'
+                button
+                    a(href='/' + img + '/score')='High Scores'

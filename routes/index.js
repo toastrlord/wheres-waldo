@@ -40,9 +40,18 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/:image/score', function(req, res, next) {
+  HighScore.find({image: req.params.image})
+  .sort([['score', 'ascending']])
+  .exec(function(err, scores) {
+    if (err) { next(err); }
+    res.render('scores', {scores, image: req.params.image, imageName: imageData[req.params.image].displayName, newScoreID: req.query.newScoreID});
+  });
+});
+
 router.get('/:image', function(req, res, next) {
   console.log('rendering image');
-  res.render('index', { image: req.params.image, characters: Object.keys(imageData[req.params.image].characters) });
+  res.render('index', { image: req.params.image, imageName: imageData[req.params.image].displayName, characters: Object.keys(imageData[req.params.image].characters) });
 });
 
 router.get('/:image/validate', function(req, res, next) {
@@ -52,18 +61,8 @@ router.get('/:image/validate', function(req, res, next) {
   res.status(200).send(result);
 });
 
-router.get('/:image/score', function(req, res, next) {
-  HighScore.find({image: req.params.image})
-  .sort([['score', 'ascending']])
-  .exec(function(err, scores) {
-    if (err) { next(err); }
-    res.render('scores', {scores, imageName: imageData[req.params.image].displayName, newScoreID: req.query.newScoreID});
-  });
-});
-
-
 router.post('/:image', [
-  body('name', 'Please enter your name').trim().isLength({min: 1}).escape(),
+  body('name', 'Please enter your name').trim().isLength({min: 1}).withMessage('Name is required').escape(),
   (req, res, next) => {
     const highScoreEntry = new HighScore({
       name: req.body.name,
@@ -73,7 +72,7 @@ router.post('/:image', [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render('/' + req.params.image, { errors: errors.asArray() });
+      res.render('index', { errors: errors.array(), image: req.params.image, imageName: imageData[req.params.image].displayName, characters: Object.keys(imageData[req.params.image].characters)});
     }
     else {
       HighScore.create(highScoreEntry, function(err, theEntry) {

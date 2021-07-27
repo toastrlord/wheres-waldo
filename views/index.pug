@@ -1,5 +1,6 @@
 extends layout
-block content
+block prepend content
+  title #{imageName}
   div(id='circle')
   div(id='buttonContainer')
   img(id='image' src='/images/' + image + '.png')
@@ -9,7 +10,7 @@ block content
     label(for='name') Name: 
     input(type='text' name='name' placeholder='Enter your name!')
     label(for='score') Score: 
-    input(id='score' type='number' readonly='readonly' name='score')
+    input(id='score' readonly='readonly' name='score')
     button.btn.btn-primary(type='submit') Submit!
 
   script(src='/javascripts/image.js')
