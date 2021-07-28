@@ -16,7 +16,6 @@ const scoreField = document.querySelector('#score');
 const selectionSize = 40; // diameter of the selection area, in pixels
 const screenCover = document.querySelector('#screenCover');
 const startButton = document.querySelector('#startButton');
-startButton.style.disabled = true;
 const loadingText = document.querySelector('#loadingText');
 circle.style.width = selectionSize + 'px';
 circle.style.height = selectionSize + 'px';
@@ -58,7 +57,7 @@ let currentScore;
         startButton.addEventListener('click', () => {
             startGame();
         });
-        startButton.style.disabled = false;
+        startButton.style.display = 'block';
     });
 })();
 
