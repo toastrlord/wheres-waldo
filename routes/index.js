@@ -50,7 +50,6 @@ router.get('/:image/score', function(req, res, next) {
 });
 
 router.get('/:image', function(req, res, next) {
-  console.log('rendering image');
   res.render('index', { image: req.params.image, imageName: imageData[req.params.image].displayName, characters: Object.keys(imageData[req.params.image].characters) });
 });
 
@@ -62,7 +61,7 @@ router.get('/:image/validate', function(req, res, next) {
 });
 
 router.post('/:image', [
-  body('name', 'Please enter your name').trim().isLength({min: 1}).withMessage('Name is required').escape(),
+  body('name', 'Please enter your name').trim().isLength({min: 1}).withMessage('Please enter your name').escape(),
   (req, res, next) => {
     const highScoreEntry = new HighScore({
       name: req.body.name,
@@ -72,7 +71,7 @@ router.post('/:image', [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render('index', { errors: errors.array(), image: req.params.image, imageName: imageData[req.params.image].displayName, characters: Object.keys(imageData[req.params.image].characters)});
+      res.render('index', { score: currentScore, errors: errors.array(), image: req.params.image, imageName: imageData[req.params.image].displayName, characters: Object.keys(imageData[req.params.image].characters)});
     }
     else {
       HighScore.create(highScoreEntry, function(err, theEntry) {

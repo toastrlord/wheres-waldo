@@ -5,16 +5,19 @@ let startTime;
 const timer = document.createElement('div');
 timer.id = 'timer';
 timer.textContent = '0.00';
+timer.style.display = 'none';
 document.body.appendChild(timer);
 let timerInterval;
 const circle = document.querySelector('#circle');
 const image = document.querySelector('#image');
 const buttonContainer = document.querySelector('#buttonContainer');
+const scoreForm = document.querySelector('form');
 const scoreField = document.querySelector('#score');
 const selectionSize = 40; // diameter of the selection area, in pixels
 const screenCover = document.querySelector('#screenCover');
 const startButton = document.querySelector('#startButton');
 startButton.style.disabled = true;
+const loadingText = document.querySelector('#loadingText');
 circle.style.width = selectionSize + 'px';
 circle.style.height = selectionSize + 'px';
 let buttonContainerHeight = 0;
@@ -51,7 +54,7 @@ let currentScore;
     promises.push(mainImagePromise);
     Promise.all(promises)
     .then(() => {
-        console.log('all images loaded!');
+        loadingText.textContent = 'Ready';
         startButton.addEventListener('click', () => {
             startGame();
         });
@@ -72,12 +75,13 @@ function startGame() {
 function gameOver() {
     // display score form
     window.clearInterval(timerInterval);
-    timer.textContent = currentScore;
+    timer.style.display = 'none';
+    circle.style.display = 'none';
+    loadingText.style.display = 'none';
     score.value = currentScore;
-    screenCover.style.display = 'block';
-    while(screenCover.children.firstChild) {
-        screenCover.removeChild(screenCover.children.firstChild);
-    }
+    screenCover.style.display = 'flex';
+    startButton.style.display = 'none';
+    scoreForm.style.display = 'flex';
 }
 
 function removeCharacter(characterName) {

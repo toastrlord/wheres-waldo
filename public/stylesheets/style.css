@@ -3,6 +3,20 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  color: gainsboro;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  text-align: center;
+  width: 150px;
+}
+
 .instructionText {
   font-weight: bold;
   color: gainsboro;
@@ -24,6 +38,8 @@ a {
   margin: 4px;
   padding: 4px;
   transition: all 350ms;
+  text-align: center;
+  cursor: pointer;
 }
 
 a:hover {
@@ -68,6 +84,10 @@ a:hover {
   top: 0;
   left: 0;
   background-color: rgb(32, 42, 58);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .pickCharacter {
@@ -103,8 +123,8 @@ a:hover {
   padding: 4px;
   width: 50%;
   min-width: 350px;
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .playHighScoreContainer {

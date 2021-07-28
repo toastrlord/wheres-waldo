@@ -1,19 +1,35 @@
 extends layout
 block prepend content
-  title #{imageName}
-  div(id='screenCover')
-    p(class='center instructionText') Ready?
-    button(id='startButton') Go!
-  div(id='circle')
-  div(id='buttonContainer')
-  img(id='image' src='/images/' + image + '.png')
-  each c in characters
-    div(class='character')= c
-  form(method='POST' action='')
-    label(for='name') Name: 
-    input(type='text' name='name' placeholder='Enter your name!')
-    label(for='score') Score: 
-    input(id='score' readonly='readonly' name='score')
-    button.btn.btn-primary(type='submit') Submit!
-
-  script(src='/javascripts/image.js')
+  title=imageName
+  if errors
+    div(id='screenCover')
+      h1=imageName
+      form(method='POST' action='')
+        p(class='center instructionText') Submit your score:
+        label(for='name') Name: 
+        input(type='text' name='name' placeholder='Enter your name!')
+        p(class='center instructionText')=errors[0].msg
+        label(for='score') Score: 
+        input(id='score' readonly='readonly' name='score' value=score)
+        button.btn.btn-primary(type='submit' style='align-self: center;') Submit!
+    a(href='/') Back to Home
+  else
+    div(id='screenCover')
+      h1=imageName
+      p(id='loadingText' class='center instructionText') Loading...
+      a(id='startButton' class='center') Go!
+      form(method='POST' action='' style='display: none;')
+        p(class='center instructionText') Submit your score:
+        label(for='name') Name: 
+        input(type='text' name='name' placeholder='Enter your name!')
+        label(for='score') Score: 
+        input(id='score' readonly='readonly' name='score')
+        button.btn.btn-primary(type='submit' style='align-self: center;') Submit!
+    a(href='/') Back to Home
+    div(id='circle')
+    div(id='buttonContainer')
+    img(id='image' src='/images/' + image + '.png')
+    each c in characters
+      div(class='character')= c
+    script(src='/javascripts/image.js')
+    
