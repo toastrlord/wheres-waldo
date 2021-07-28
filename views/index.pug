@@ -1,6 +1,7 @@
 extends layout
 block prepend content
   title=imageName
+  a(href='/' class='center') Back to Home
   if errors
     div(id='screenCover')
       h1=imageName
@@ -12,7 +13,7 @@ block prepend content
         label(for='score') Score: 
         input(id='score' readonly='readonly' name='score' value=score)
         button.btn.btn-primary(type='submit' style='align-self: center;') Submit!
-    a(href='/') Back to Home
+      a(href='/') Back to Home
   else
     div(id='screenCover')
       h1=imageName
@@ -25,7 +26,8 @@ block prepend content
         label(for='score') Score: 
         input(id='score' readonly='readonly' name='score')
         button.btn.btn-primary(type='submit' style='align-self: center;') Submit!
-    a(href='/') Back to Home
+      
+      a(href='/') Back to Home
     div(id='circle')
     div(id='buttonContainer')
     img(id='image' src='/images/' + image + '.png')
