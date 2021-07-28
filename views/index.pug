@@ -1,6 +1,9 @@
 extends layout
 block prepend content
   title #{imageName}
+  div(id='screenCover')
+    p(class='center instructionText') Ready?
+    button(id='startButton') Go!
   div(id='circle')
   div(id='buttonContainer')
   img(id='image' src='/images/' + image + '.png')

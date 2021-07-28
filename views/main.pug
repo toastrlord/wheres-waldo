@@ -2,6 +2,7 @@ extends layout
 block content
     title Where's Waldo?
     h1 Where's Waldo?
+    p(class='center instructionText') Instructions: Find all the characters in the image- use your mouse to click on them and select the right character. Once you've found them all, submit your score to the leaderboard! Click "Play" below to start.
     each img in images 
         div(class='mainDisplay')
             div(class='playHighScoreContainer')
@@ -11,7 +12,5 @@ block content
                 each character in Object.keys(imageData[img].characters)
                     li=character
             div(class='playHighScoreContainer')
-                button
-                    a(href='/' + img)='Play'
-                button
-                    a(href='/' + img + '/score')='High Scores'
+                a(href='/' + img)='Play'
+                a(href='/' + img + '/score')='High Scores'

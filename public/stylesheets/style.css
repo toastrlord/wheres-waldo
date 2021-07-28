@@ -1,11 +1,34 @@
 body {
-  padding: 50px;
+  background-color: rgb(32, 42, 58);
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.instructionText {
+  font-weight: bold;
+  color: gainsboro;
+  font-size: 16px;
+  min-width: 240px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 a {
   text-decoration: none;
   color: black;
+  border-radius: 6px;
+  border: solid 2px rgb(78, 78, 78);
+  background-color: rgb(184, 184, 184);
+  margin: 4px;
+  padding: 4px;
+  transition: all 350ms;
+}
+
+a:hover {
+  background-color: white;
+  border: solid 2px black
 }
 
 #circle {
@@ -19,7 +42,16 @@ a {
   position: fixed;
   top: 0;
   font-weight: bold;
-  background-color: white;
+  background-color: rgb(184, 184, 184);
+  padding: 4px;
+  border-radius: 50%;
+  border: solid 2px rgb(78, 78, 78);
+}
+
+#image {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 #buttonContainer {
@@ -29,14 +61,24 @@ a {
   text-align: center;
 }
 
+#screenCover {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(32, 42, 58);
+}
+
 .pickCharacter {
   transition: all 250ms;
-  border: solid black 1px;
   padding-left: 8px;
   padding-right: 8px;
   cursor: pointer;
   user-select: none;
-  background-color: grey;
+  border: solid 2px rgb(78, 78, 78);
+  background-color: rgb(184, 184, 184);
+  border-radius: 4px;
 }
 
 .character {
@@ -45,6 +87,7 @@ a {
 
 .pickCharacter:hover {
   background-color: white;
+  border: solid 2px black;
 }
 
 .mainDisplay {
@@ -53,8 +96,8 @@ a {
   align-items: center;
   justify-content: space-evenly;
   border-radius: 6px;
-  border: solid 2px grey;
-  background-color: gainsboro;
+  border: solid 2px rgb(78, 78, 78);
+  background-color: rgb(143, 143, 143);
   margin-top: 8px;
   margin-bottom: 8px;
   padding: 4px;
@@ -95,6 +138,7 @@ a {
 }
 
 h1 {
+  color: gainsboro;
   text-align: center;
 }
 
@@ -102,17 +146,25 @@ table {
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 12px;
+  font-size: 16px;
 }
 
 td, th {
-  border: solid 2px grey;
+  border: solid 2px rgb(78, 78, 78);
   text-align: center;
   padding-left: 8px;
   padding-right: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+tr {
+  background-color: rgb(218, 206, 206);
 }
 
 tr:nth-child(even) {
-  background-color: rgb(218, 206, 206);
+  background-color: rgb(143, 143, 143);
 }
 
 .selectedScore {

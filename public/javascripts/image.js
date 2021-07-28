@@ -1,19 +1,20 @@
 let trackMouse = true;
 let characters = [];
-const start = Date.now();
+let startTime;
 
 const timer = document.createElement('div');
 timer.id = 'timer';
+timer.textContent = '0.00';
 document.body.appendChild(timer);
-const timerInterval = window.setInterval(() => {
-    let currentTime = (Date.now() - start) / 1000;
-    timer.textContent = currentTime.toFixed(2);
-}, 10);
+let timerInterval;
 const circle = document.querySelector('#circle');
 const image = document.querySelector('#image');
 const buttonContainer = document.querySelector('#buttonContainer');
 const scoreField = document.querySelector('#score');
 const selectionSize = 40; // diameter of the selection area, in pixels
+const screenCover = document.querySelector('#screenCover');
+const startButton = document.querySelector('#startButton');
+startButton.style.disabled = true;
 circle.style.width = selectionSize + 'px';
 circle.style.height = selectionSize + 'px';
 let buttonContainerHeight = 0;
@@ -51,14 +52,32 @@ let currentScore;
     Promise.all(promises)
     .then(() => {
         console.log('all images loaded!');
+        startButton.addEventListener('click', () => {
+            startGame();
+        });
+        startButton.style.disabled = false;
     });
 })();
+
+function startGame() {
+    screenCover.style.display = 'none';
+    startTime = Date.now();
+    timer.style.display = 'block';
+    timerInterval = window.setInterval(() => {
+        let currentTime = (Date.now() - startTime) / 1000;
+        timer.textContent = currentTime.toFixed(2);
+    }, 10);
+}
 
 function gameOver() {
     // display score form
     window.clearInterval(timerInterval);
     timer.textContent = currentScore;
     score.value = currentScore;
+    screenCover.style.display = 'block';
+    while(screenCover.children.firstChild) {
+        screenCover.removeChild(screenCover.children.firstChild);
+    }
 }
 
 function removeCharacter(characterName) {
@@ -100,7 +119,7 @@ function resetButtonContainer() {
 }
 
 function getCurrentScore() {
-    return ((Date.now() - start) / 1000).toFixed(2);
+    return ((Date.now() - startTime) / 1000).toFixed(2);
 }
 
 function createCharacterBar(pageX, pageY, imgX, imgY) {

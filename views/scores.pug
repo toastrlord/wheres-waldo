@@ -3,12 +3,10 @@ block content
     title High Scores: #{imageName} 
     h1(class='bold') High Scores: #{imageName} 
     div(class='center')
-        button
-            a(href='/') Back
-        button
-            a(href='/' + image) Play
+        a(href='/') Back
+        a(href='/' + image) Play
     if scores.length == 0
-        div(class='center') No high scores posted!
+        div(class='center instructionText') No high scores posted ...yet!
     else
         table
             tr
