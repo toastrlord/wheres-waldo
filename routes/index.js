@@ -35,7 +35,9 @@ function validate(x, y, r, imageName, characterName, score) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
   HighScore.find({}).sort([['score', 'ascending']]).exec(function(err, scores) {
-    if (err) { return next(err); }
+    if (err) { 
+      res.render('main', { images: Object.keys(imageData), imageData});
+    }
     res.render('main', { images: Object.keys(imageData), imageData, scores });
   });
 });
